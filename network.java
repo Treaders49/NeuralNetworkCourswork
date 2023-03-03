@@ -93,6 +93,7 @@ public class network {
 	
 
 	public static double sigmoyd(double exponent) {
+		exponent *= -1;
 		final double e = 2.71828;
 		return 1/(1 + (Math.pow(e, exponent)));
 	}
