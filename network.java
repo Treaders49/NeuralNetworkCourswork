@@ -39,23 +39,33 @@ public class network {
 		System.out.println(this.getHiddenNodes().size());
 		for (hiddenNode hiddenN : this.getHiddenNodes()) {
 			int nodeIndx = 0;
-			int activation = 0;
+			double activation = 0;
 			while (hiddenN.getLinkedNodes().size() > nodeIndx) {
 				inputNode iNode = this.getInputNodes().get(nodeIndx);
 				activation += Math.round(iNode.getVal() * hiddenN.getLinkedWeights().get(nodeIndx));
+				System.out.println();
+				System.out.println(iNode.getVal());
+				System.out.println(hiddenN.getLinkedWeights().get(nodeIndx));
+				System.out.println(hiddenN.getBias());
 				nodeIndx++;
 			}
-			activation+= hiddenN.getBias();
 			
+			activation+= hiddenN.getBias();
+			System.out.println("activation");
+			System.out.println(activation);
+			System.out.println(sigmoyd(activation));
 			hiddenN.setActivationVal(sigmoyd(activation));
 		}
 		
 		
 		double finalOutputVal = 0;
 		for (hiddenNode hiddenN : this.getHiddenNodes()) {
+			
 			finalOutputVal+= hiddenN.getActivationVal() * hiddenN.getWeight();
 		}
 		finalOutputVal+= this.getOutput().getBias();
+		System.out.println("FInal output val");
+		System.out.println(finalOutputVal);
 		this.getOutput().setEstimatedOutput(sigmoyd(finalOutputVal));
 	}
 	
@@ -70,6 +80,10 @@ public class network {
 		System.out.println(this.getHiddenNodes().size());
 		for (hiddenNode hiddenN : this.getHiddenNodes()) {
 			System.out.println(hiddenN);
+			System.out.println(hiddenN.getWeight());
+			System.out.println(oNode.getError());
+			System.out.println(hiddenN.getActivationVal());
+			
 			double hiddenError = (hiddenN.getWeight() * oNode.getError()) * (hiddenN.getActivationVal() * (1 - hiddenN.getActivationVal()));
 			hiddenN.setError(hiddenError);
 			System.out.println(hiddenError);
@@ -78,9 +92,10 @@ public class network {
 			ArrayList<Double> newWeights =  new ArrayList<Double>();
 			int inputNodeIndx = 0;
 			while (inputNodeIndx < hiddenN.getLinkedWeights().size()) {
+				System.out.println(hiddenN.getLinkedWeights());
 				inputNode iNode = hiddenN.getLinkedNodes().get(inputNodeIndx);
 				double iWeight = hiddenN.getLinkedWeights().get(inputNodeIndx);
-				double newWeight = iWeight + (learningParameter * hiddenN.getActivationVal() * iNode.getVal());
+				double newWeight = iWeight + (learningParameter * hiddenN.getError() * iNode.getVal());
 				newWeights.add(newWeight);
 				inputNodeIndx++;
 			}
@@ -93,7 +108,9 @@ public class network {
 	
 
 	public static double sigmoyd(double exponent) {
-		exponent *= -1;
+		exponent*= -1.0;
+		System.out.println("exponent");
+		System.out.println(exponent);
 		final double e = 2.71828;
 		return 1/(1 + (Math.pow(e, exponent)));
 	}

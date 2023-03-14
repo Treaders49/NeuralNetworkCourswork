@@ -7,14 +7,21 @@ public class hiddenNode {
 	private double weight;
 	private double activationVal;
 	private double error;
+	private double initialBias;
+	private double initialWeight;
+	private ArrayList<Double> initialLinkedWeights;
 	
-	public hiddenNode() {
-		this.bias = (Math.round(Math.random() * 100)) / 100.0;
-		this.weight = (Math.round(Math.random() * 100)) / 100.0;
+	
+	public hiddenNode(double nodeWeight, double nodeBias) {
+		this.bias = nodeBias;
+		this.initialBias = nodeBias;
+		this.weight = nodeWeight;
+		this.initialWeight = nodeWeight;
 		activationVal = 0;
 		setError(0);
 		linkedNodes = new ArrayList<inputNode>();
 		linkedWeights = new ArrayList<Double>();
+		initialLinkedWeights = new ArrayList<Double>();
 	}
 	
 	public ArrayList<inputNode> getLinkedNodes() {
@@ -60,6 +67,10 @@ public class hiddenNode {
 	public void addLinkedWeight(double weight) {
 		linkedWeights.add(weight);
 	}
+	
+	public void addInitialLinkedWeight(double weight) {
+		initialLinkedWeights.add(weight);
+	}
 
 	public int getLabel() {
 		return label;
@@ -83,6 +94,30 @@ public class hiddenNode {
 
 	public void setError(double error) {
 		this.error = error;
+	}
+
+	public ArrayList<Double> getInitialLinkedWeights() {
+		return initialLinkedWeights;
+	}
+
+	public void setInitialLinkedWeights(ArrayList<Double> initialLinkedWeights) {
+		this.initialLinkedWeights = initialLinkedWeights;
+	}
+
+	public double getInitialWeight() {
+		return initialWeight;
+	}
+
+	public void setInitialWeight(double initialWeight) {
+		this.initialWeight = initialWeight;
+	}
+
+	public double getInitialBias() {
+		return initialBias;
+	}
+
+	public void setInitialBias(double initialBias) {
+		this.initialBias = initialBias;
 	}
 	
 }

@@ -5,9 +5,12 @@ public class outputNode {
 	private double realOutput;
 	private double estimatedOutput;
 	private double error;
+	private double initialBias;
 	
-	public outputNode(double realOutput) {
-		bias = (Math.round(Math.random() * 100)) / 100.0;
+	
+	public outputNode(double realOutput, double bias) {
+		this.bias = bias;
+		this.initialBias = bias;
 		error = 0;
 		this.realOutput = realOutput;
 	}
@@ -34,5 +37,11 @@ public class outputNode {
 	}
 	public void setError(double error) {
 		this.error = error;
+	}
+	public double getInitialBias() {
+		return initialBias;
+	}
+	public void setInitialBias(double initialBias) {
+		this.initialBias = initialBias;
 	}
 }
