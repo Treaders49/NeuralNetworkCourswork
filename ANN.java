@@ -14,21 +14,17 @@ public class ANN {
 		int inputs = scan.nextInt();
 		System.out.println("Enter number of hidden nodes:");
 		int hiddenNodes = scan.nextInt();
-		System.out.println("Enter the output value");
 		System.out.println("Enter the learning parameter");
 		double learningParameter = scan.nextDouble();
-		System.out.println("Enter bias for output node");
-		double bias = scan.nextDouble();
+		double bias = randomVal();
 		outputNode output = new outputNode(0.0, bias);
 		network neuralNetwork = new network(output);
 		int indxInputs = 0;
 		
 		int indxHidden = 0;
 		while (indxHidden < hiddenNodes) {
-			System.out.println("enter weight going out of hidden node");
-			double nodeWeight = scan.nextDouble();
-			System.out.println("enter bias of hidden node");
-			double nodeBias = scan.nextDouble();
+			double nodeWeight = randomVal();
+			double nodeBias = randomVal();
 			hiddenNode hNode = new hiddenNode(nodeWeight, nodeBias);
 			neuralNetwork.addHiddenNode(hNode);
 			indxHidden++;
@@ -37,8 +33,8 @@ public class ANN {
 			inputNode inode = new inputNode(0.0);
 			for (hiddenNode hNode: neuralNetwork.getHiddenNodes()) {
 				hNode.addLinkedNode(inode);
-				System.out.println("enter weight coming from input node");
-				double n = scan.nextDouble();
+				
+				double n = randomVal();
 				hNode.addLinkedWeight(n);
 				hNode.addInitialLinkedWeight(n);
 			}
@@ -135,10 +131,15 @@ public class ANN {
         LineGraph graph = new LineGraph(trainErrorData, validationErrorData, "epochs", "error");
         JFrame frame = new JFrame("Line Graph");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("LP: " + Double.toString(learningParameter) + "  " + "hidden nodes: " + Integer.toString(hiddenNodes));
         frame.add(graph);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+	}
+
+	private static double randomVal() {
+		return (Math.random() * 0.9) + 0.01;
 	}
 
 	private static void resetMLP(network n) {
@@ -175,7 +176,4 @@ public class ANN {
 		
 	}
 
-	private static double round(double valueToRound) {
-		return Math.round(valueToRound * 100000)/ 1000000.0;
-	}
 }

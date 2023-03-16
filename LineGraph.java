@@ -56,7 +56,7 @@ public class LineGraph extends JPanel {
         g2d.rotate(Math.PI / 2);
         
         // draw x and y axis tick marks and labels
-        int xTickSpacing = (width - 2 * padding) / (trainData.length - 1);
+        int xTickSpacing = (width - 2 * padding) / (trainData.length);
         int yTickSpacing = (height - 2 * padding) / 10;
         g2d.setColor(Color.GRAY);
         for (int i = 0; i < trainData.length; i++) {
@@ -86,7 +86,7 @@ public class LineGraph extends JPanel {
             y0 = y1;
         }
         
-       g2d.setColor(Color.PINK);
+       g2d.setColor(Color.GREEN);
         x0 = padding;
         y0 = height - padding - (int) ((validationData[0] - minValue) * scale);
         for (int i = 1; i < validationData.length; i++) {
